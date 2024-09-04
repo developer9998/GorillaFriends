@@ -9,10 +9,12 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace GorillaFriends
 {
     [BepInPlugin(ModConstants.ModConstants.modGUID, ModConstants.ModConstants.modName, ModConstants.ModConstants.modVersion)]
+    //[BepInIncompatibility("net.rusjj.scoreboardtweaks")]
     public class Main : BaseUnityPlugin
     {
         public enum eRecentlyPlayed : byte
@@ -159,8 +161,8 @@ namespace GorillaFriends
     }
 
     /* GT 1.1.69+ */
-    [HarmonyPatch(typeof(GorillaScoreBoard))]
-    [HarmonyPatch("RedrawPlayerLines", MethodType.Normal)]
+    [HarmonyPatch(typeof(GorillaScoreBoard), "RedrawPlayerLines")]
+    [HarmonyWrapSafe]
     internal class GorillaScoreBoardRedrawPlayerLines
     {
         private static bool Prefix(GorillaScoreBoard __instance)
@@ -185,7 +187,7 @@ namespace GorillaFriends
                             var txtusr = __instance.lines[i].playerVRRig.playerText;
                             bool isLocalPlaya = __instance.lines[i].linePlayer.IsLocal;
 
-                            Text boardText = __instance.boardText;
+                            TextMeshPro boardText = __instance.boardText;
                             if (!isLocalPlaya && Main.IsInFriendList(usrid))
                             {
                                 boardText.text += Main.s_clrFriend + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
@@ -233,8 +235,8 @@ namespace GorillaFriends
             return false;
         }
     }
-    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine))]
-    [HarmonyPatch("InitializeLine", MethodType.Normal)]
+    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine), "InitializeLine")]
+    [HarmonyWrapSafe]
     internal class GorillaScoreBoardLineInit
     {
         private static void Prefix(GorillaPlayerScoreboardLine __instance)
@@ -255,8 +257,8 @@ namespace GorillaFriends
             }
         }
     }
-    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine))]
-    [HarmonyPatch("UpdateLine", MethodType.Normal)]
+    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine), "UpdateLine")]
+    [HarmonyWrapSafe]
     internal class GorillaScoreBoardLineUpdate
     {
         private static void Prefix(GorillaPlayerScoreboardLine __instance)
@@ -274,8 +276,8 @@ namespace GorillaFriends
     }
     /* GT 1.1.69+ */
 
-    [HarmonyPatch(typeof(GorillaScoreBoard))]
-    [HarmonyPatch("Start", MethodType.Normal)]
+    [HarmonyPatch(typeof(GorillaScoreBoard), "Start")]
+    [HarmonyWrapSafe]
     internal class GorillaScoreBoardStart
     {
         private static void Prefix(GorillaScoreBoard __instance)
@@ -286,7 +288,7 @@ namespace GorillaFriends
                 if (!Main.m_listScoreboards.Contains(__instance))
                 {
                     Main.m_listScoreboards.Add(__instance);
-                    __instance.boardText.supportRichText = true;
+                    __instance.boardText.richText = true;
 
                     var ppTmp = __instance.buttonText.transform.localPosition;
                     var sd = __instance.buttonText.rectTransform.sizeDelta;
@@ -351,8 +353,8 @@ namespace GorillaFriends
         }
     }
 
-    [HarmonyPatch(typeof(GorillaNetworking.PhotonNetworkController))]
-    [HarmonyPatch("OnDisconnected", MethodType.Normal)]
+    [HarmonyPatch(typeof(GorillaNetworking.PhotonNetworkController), "OnDisconnected")]
+    [HarmonyWrapSafe]
     internal class OnRoomDisconnected
     {
         private static void Prefix()
