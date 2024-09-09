@@ -118,7 +118,7 @@ namespace GorillaFriends
             GorillaTagger.Instance.offlineVRRig.PlayHandTapLocal(67, component.isLeftHand, 0.05f);
             if(PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
             {
-                GorillaTagger.Instance.myVRRig.RPC("PlayHandTap", RpcTarget.Others, (object)67, (object)component.isLeftHand, (object)0.05f);
+                GorillaTagger.Instance.myVRRig.SendRPC("PlayHandTap", RpcTarget.Others, (object)67, (object)component.isLeftHand, (object)0.05f);
             }
 
             if (isOn)
