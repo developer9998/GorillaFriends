@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using GorillaFriends.Extensions;
 using HarmonyLib;
 using Photon.Pun;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -182,45 +184,49 @@ namespace GorillaFriends
                         if (__instance.lines[i].linePlayer != null)
                         {
                             var usrid = __instance.lines[i].linePlayer.UserId;
-                            var txtusr = __instance.lines[i].playerVRRig.playerText;
+                            var playerRig = __instance.lines[i].playerVRRig;
                             bool isLocalPlaya = __instance.lines[i].linePlayer.IsLocal;
 
-                            Text boardText = __instance.boardText;
+                            var boardText = __instance.boardText;
                             if (!isLocalPlaya && Main.IsInFriendList(usrid))
                             {
                                 boardText.text += Main.s_clrFriend + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
-                                txtusr.color = Main.m_clrFriend;
+                                playerRig.SetTagColour(Main.m_clrFriend);
                             }
                             else if (Main.IsVerified(usrid))
                             {
                                 boardText.text += Main.s_clrVerified + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
-                                txtusr.color = Main.m_clrVerified;
-                                if (__instance.lines[i].linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText.color = Main.m_clrVerified;
+                                playerRig.SetTagColour(Main.m_clrVerified);
+                                if (__instance.lines[i].linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.SetTagColour(Main.m_clrVerified);
                             }
                             else if (!isLocalPlaya && !Main.NeedToCheckRecently(usrid) && Main.HasPlayedWithUsRecently(usrid) == Main.eRecentlyPlayed.Before)
                             {
                                 boardText.text += Main.s_clrPlayedRecently + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
-                                txtusr.color = Main.m_clrPlayedRecently;
+                                playerRig.SetTagColour(Main.m_clrPlayedRecently);
                             }
                             else
                             {
                                 boardText.text += "\n " + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName);
-                                txtusr.color = Color.white;
+                                playerRig.SetTagColour(Color.white, false);
                             }
+
+                            var buttonText = __instance.buttonText;
+                            buttonText.enableWordWrapping = false;
+                            buttonText.overflowMode = TextOverflowModes.Overflow;
                             if (isLocalPlaya != true)
                             {
                                 if (__instance.lines[i].reportButton.isActiveAndEnabled)
                                 {
-                                    __instance.buttonText.text += "FRIEND       MUTE                      REPORT\n";
+                                    buttonText.text += "FRIEND       MUTE                      REPORT\n";
                                 }
                                 else
                                 {
-                                    __instance.buttonText.text += "FRIEND       MUTE      HATE SPEECH    TOXICITY      CHEATING      CANCEL\n";
+                                    buttonText.text += "FRIEND       MUTE      HATE SPEECH    TOXICITY      CHEATING      CANCEL\n";
                                 }
                             }
                             else
                             {
-                                __instance.buttonText.text += "\n";
+                                buttonText.text += "\n";
                             }
                         }
                     }
@@ -286,7 +292,7 @@ namespace GorillaFriends
                 if (!Main.m_listScoreboards.Contains(__instance))
                 {
                     Main.m_listScoreboards.Add(__instance);
-                    __instance.boardText.supportRichText = true;
+                    __instance.boardText.richText = true;
 
                     var ppTmp = __instance.buttonText.transform.localPosition;
                     var sd = __instance.buttonText.rectTransform.sizeDelta;
