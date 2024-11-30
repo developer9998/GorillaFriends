@@ -42,18 +42,21 @@ namespace GorillaFriends
                     if (Main.IsVerified(playa.UserId))
                     {
                         parentLine.playerName.color = Main.m_clrVerified;
-                        parentLine.playerVRRig.playerText.color = Main.m_clrVerified;
+                        parentLine.playerVRRig.playerText1.color = Main.m_clrVerified;
+                        parentLine.playerVRRig.playerText2.color = Main.m_clrVerified;
                     }
                     else
                     {
                         parentLine.playerName.color = Color.white;
-                        parentLine.playerVRRig.playerText.color = Color.white;
+                        parentLine.playerVRRig.playerText1.color = Color.white;
+                        parentLine.playerVRRig.playerText2.color = Color.white;
                     }
                 }
                 else
                 {
                     parentLine.playerName.color = Main.m_clrFriend;
-                    parentLine.playerVRRig.playerText.color = Main.m_clrFriend;
+                    parentLine.playerVRRig.playerText1.color = Main.m_clrFriend;
+                    parentLine.playerVRRig.playerText2.color = Main.m_clrFriend;
                 }
             }
         }
@@ -67,14 +70,15 @@ namespace GorillaFriends
             if (Main.IsVerified(userId))
             {
                 parentLine.playerName.color = Main.m_clrVerified;
-                parentLine.playerVRRig.playerText.color = Main.m_clrVerified;
-                if (parentLine.linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText.color = Main.m_clrVerified;
+                parentLine.playerVRRig.playerText1.color = Main.m_clrVerified;
+                parentLine.playerVRRig.playerText2.color = Main.m_clrVerified;
+                if (parentLine.linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText1.color = Main.m_clrVerified;
             }
             else if (!isLocalPlaya && Main.IsFriend(userId))
             {
                 if (!Main.IsInFriendList(userId)) Main.m_listCurrentSessionFriends.Add(userId);
                 parentLine.playerName.color = Main.m_clrFriend;
-                parentLine.playerVRRig.playerText.color = Main.m_clrFriend;
+                parentLine.playerVRRig.playerText1.color = Main.m_clrFriend;
 
                 isOn = true;
                 UpdateColor();
@@ -88,20 +92,20 @@ namespace GorillaFriends
                 {
                     PlayerPrefs.SetString(userId + "_pd", (((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds() + Main.moreTimeIfWeLagging).ToString());
                     parentLine.playerName.color = Main.m_clrPlayedRecently;
-                    parentLine.playerVRRig.playerText.color = Main.m_clrPlayedRecently;
+                    parentLine.playerVRRig.playerText1.color = Main.m_clrPlayedRecently;
                 }
                 else
                 {
                     PlayerPrefs.SetString(userId + "_pd", ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds().ToString());
                     parentLine.playerName.color = Color.white;
-                    parentLine.playerVRRig.playerText.color = Color.white;
+                    parentLine.playerVRRig.playerText1.color = Color.white;
                 }
             }
             else
             {
                 parentLine.playerName.color = Color.white;
-                parentLine.playerVRRig.playerText.color = Color.white;
-                GorillaTagger.Instance.offlineVRRig.playerText.color = Color.white;
+                parentLine.playerVRRig.playerText1.color = Color.white;
+                GorillaTagger.Instance.offlineVRRig.playerText1.color = Color.white;
             }
         }
         private void OnTriggerEnter(Collider collider)
@@ -126,7 +130,7 @@ namespace GorillaFriends
                 Main.m_listCurrentSessionFriends.Add(parentLine.linePlayer.UserId);
                 PlayerPrefs.SetInt(parentLine.linePlayer.UserId + "_friend", 1);
                 parentLine.playerName.color = Main.m_clrFriend;
-                parentLine.playerVRRig.playerText.color = Main.m_clrFriend;
+                parentLine.playerVRRig.playerText1.color = Main.m_clrFriend;
                 goto ENDING; /* GT 1.1.0 */
                 //return;
             }
@@ -136,12 +140,12 @@ namespace GorillaFriends
             if (Main.IsVerified(parentLine.linePlayer.UserId))
             {
                 parentLine.playerName.color = Main.m_clrVerified;
-                parentLine.playerVRRig.playerText.color = Main.m_clrVerified;
+                parentLine.playerVRRig.playerText1.color = Main.m_clrVerified;
             }
             else
             {
                 parentLine.playerName.color = Color.white;
-                parentLine.playerVRRig.playerText.color = Color.white;
+                parentLine.playerVRRig.playerText1.color = Color.white;
             }
 
             /* GT 1.1.0 */

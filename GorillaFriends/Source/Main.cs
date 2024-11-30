@@ -184,7 +184,7 @@ namespace GorillaFriends
                         if (__instance.lines[i].linePlayer != null)
                         {
                             var usrid = __instance.lines[i].linePlayer.UserId;
-                            var txtusr = __instance.lines[i].playerVRRig.playerText;
+                            var txtusr = __instance.lines[i].playerVRRig.playerText1;
                             bool isLocalPlaya = __instance.lines[i].linePlayer.IsLocal;
 
                             TextMeshPro boardText = __instance.boardText;
@@ -197,7 +197,7 @@ namespace GorillaFriends
                             {
                                 boardText.text += Main.s_clrVerified + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
                                 txtusr.color = Main.m_clrVerified;
-                                if (__instance.lines[i].linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText.color = Main.m_clrVerified;
+                                if (__instance.lines[i].linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText1.color = Main.m_clrVerified;
                             }
                             else if (!isLocalPlaya && !Main.NeedToCheckRecently(usrid) && Main.HasPlayedWithUsRecently(usrid) == Main.eRecentlyPlayed.Before)
                             {
