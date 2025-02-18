@@ -43,20 +43,17 @@ namespace GorillaFriends
                     {
                         parentLine.playerName.color = Main.m_clrVerified;
                         parentLine.playerVRRig.playerText1.color = Main.m_clrVerified;
-                        parentLine.playerVRRig.playerText2.color = Main.m_clrVerified;
                     }
                     else
                     {
                         parentLine.playerName.color = Color.white;
                         parentLine.playerVRRig.playerText1.color = Color.white;
-                        parentLine.playerVRRig.playerText2.color = Color.white;
                     }
                 }
                 else
                 {
                     parentLine.playerName.color = Main.m_clrFriend;
                     parentLine.playerVRRig.playerText1.color = Main.m_clrFriend;
-                    parentLine.playerVRRig.playerText2.color = Main.m_clrFriend;
                 }
             }
         }
@@ -71,7 +68,6 @@ namespace GorillaFriends
             {
                 parentLine.playerName.color = Main.m_clrVerified;
                 parentLine.playerVRRig.playerText1.color = Main.m_clrVerified;
-                parentLine.playerVRRig.playerText2.color = Main.m_clrVerified;
                 if (parentLine.linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText1.color = Main.m_clrVerified;
             }
             else if (!isLocalPlaya && Main.IsFriend(userId))
