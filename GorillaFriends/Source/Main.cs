@@ -17,12 +17,12 @@ namespace GorillaFriends
     //[BepInIncompatibility("net.rusjj.scoreboardtweaks")]
     public class Main : BaseUnityPlugin
     {
-        public enum eRecentlyPlayed : byte
+        /*public enum eRecentlyPlayed : byte
         {
             Never = 0,
             Before = 1,
             Now = 2,
-        }
+        }*/
         internal static Main m_hInstance = null;
         internal static bool m_bScoreboardTweakerMode = false;
         internal static List<string> m_listVerifiedUserIds = new List<string>();
@@ -149,7 +149,7 @@ namespace GorillaFriends
             }
             return true;
         }
-        public static eRecentlyPlayed HasPlayedWithUsRecently(string userId)
+        /*public static eRecentlyPlayed HasPlayedWithUsRecently(string userId)
         {
             long time = long.Parse(PlayerPrefs.GetString(userId + "_pd", "0"));
             if (time == 0) return eRecentlyPlayed.Never;
@@ -157,7 +157,7 @@ namespace GorillaFriends
             long curTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
             if (time > curTime - moreTimeIfWeLagging && time <= curTime) return eRecentlyPlayed.Now;
             return ((time + howMuchSecondsIsRecently) > curTime) ? eRecentlyPlayed.Before : eRecentlyPlayed.Never;
-        }
+        }*/
     }
 
     /* GT 1.1.69+ */
@@ -199,11 +199,11 @@ namespace GorillaFriends
                                 txtusr.color = Main.m_clrVerified;
                                 if (__instance.lines[i].linePlayer.IsLocal) GorillaTagger.Instance.offlineVRRig.playerText1.color = Main.m_clrVerified;
                             }
-                            else if (!isLocalPlaya && !Main.NeedToCheckRecently(usrid) && Main.HasPlayedWithUsRecently(usrid) == Main.eRecentlyPlayed.Before)
+                            /*else if (!isLocalPlaya && !Main.NeedToCheckRecently(usrid) && Main.HasPlayedWithUsRecently(usrid) == Main.eRecentlyPlayed.Before)
                             {
                                 boardText.text += Main.s_clrPlayedRecently + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName) + "</color>";
                                 txtusr.color = Main.m_clrPlayedRecently;
-                            }
+                            }*/
                             else
                             {
                                 boardText.text += "\n " + __instance.NormalizeName(true, __instance.lines[i].linePlayer.NickName);

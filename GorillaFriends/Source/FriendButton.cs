@@ -81,7 +81,7 @@ namespace GorillaFriends
             }
             else if(!isLocalPlaya)
             {
-                eRecentlyPlayed hasPlayedBefore = Main.HasPlayedWithUsRecently(userId);
+                /*eRecentlyPlayed hasPlayedBefore = Main.HasPlayedWithUsRecently(userId);
                 if (!Main.NeedToCheckRecently(userId)) Main.m_listCurrentSessionRecentlyChecked.Add(userId);
 
                 if (hasPlayedBefore == Main.eRecentlyPlayed.Before)
@@ -95,7 +95,7 @@ namespace GorillaFriends
                     PlayerPrefs.SetString(userId + "_pd", ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds().ToString());
                     parentLine.playerName.color = Color.white;
                     parentLine.playerVRRig.playerText1.color = Color.white;
-                }
+                }*/
             }
             else
             {
@@ -125,6 +125,7 @@ namespace GorillaFriends
             {           
                 Main.m_listCurrentSessionFriends.Add(parentLine.linePlayer.UserId);
                 PlayerPrefs.SetInt(parentLine.linePlayer.UserId + "_friend", 1);
+                PlayerPrefs.Save();
                 parentLine.playerName.color = Main.m_clrFriend;
                 parentLine.playerVRRig.playerText1.color = Main.m_clrFriend;
                 goto ENDING; /* GT 1.1.0 */
@@ -133,6 +134,7 @@ namespace GorillaFriends
 
             Main.m_listCurrentSessionFriends.Remove(parentLine.linePlayer.UserId);
             PlayerPrefs.DeleteKey(parentLine.linePlayer.UserId + "_friend");
+            PlayerPrefs.Save();
             if (Main.IsVerified(parentLine.linePlayer.UserId))
             {
                 parentLine.playerName.color = Main.m_clrVerified;
