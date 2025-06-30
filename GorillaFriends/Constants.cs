@@ -1,6 +1,6 @@
-﻿namespace ModConstants
+﻿namespace GorillaFriends
 {
-    class ModConstants
+    class Constants
     {
         public const string modGUID = "net.rusjj.gorillafriends";
         public const string modName = "Gorilla Friends!";

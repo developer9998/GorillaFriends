@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -11,368 +11,376 @@
     <PackageProjectUrl>https://github.com/RusJJ/GorillaFriends</PackageProjectUrl>
     <Copyright>RusJJ</Copyright>
     <PackageLicenseExpression>MIT License</PackageLicenseExpression>
+	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\BepInEx\core\0Harmony.dll</HintPath>
+      <HintPath>$(BepInExAssemblyPath)\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp" Publicize="true">
+      <HintPath>$(GameAssemblyPath)\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\BepInEx\core\BepInEx.dll</HintPath>
+      <HintPath>$(BepInExAssemblyPath)\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Common">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Common.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Common.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Log">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Log.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Log.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Realtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Realtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Realtime.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Runtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Runtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Sockets">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Sockets.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Sockets.dll</HintPath>
     </Reference>
     <Reference Include="Fusion.Unity">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Fusion.Unity.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Fusion.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Photon3Unity3D.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="PhotonRealtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonRealtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonRealtime.dll</HintPath>
     </Reference>
     <Reference Include="PhotonUnityNetworking">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonUnityNetworking.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonUnityNetworking.dll</HintPath>
     </Reference>
     <Reference Include="PhotonUnityNetworking.Utilities">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonUnityNetworking.Utilities.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonUnityNetworking.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonVoice.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonVoice.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice.API">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonVoice.API.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonVoice.API.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice.Fusion">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonVoice.Fusion.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonVoice.Fusion.dll</HintPath>
     </Reference>
     <Reference Include="PhotonVoice.PUN">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\PhotonVoice.PUN.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\PhotonVoice.PUN.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Addressables">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Addressables.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Addressables.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.AI.Navigation.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Animation.Rigging">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Animation.Rigging.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Animation.Rigging.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Animation.Rigging.DocCodeExamples">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Animation.Rigging.DocCodeExamples.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Animation.Rigging.DocCodeExamples.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Burst.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Collections.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Formats.Fbx.Runtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Formats.Fbx.Runtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Formats.Fbx.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.InputSystem.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.InputSystem.ForUI.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Mathematics.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ProBuilder.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ProBuilder.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.Csg">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ProBuilder.Csg.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ProBuilder.Csg.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.KdTree">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ProBuilder.KdTree.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ProBuilder.KdTree.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.Poly2Tri">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ProBuilder.Poly2Tri.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ProBuilder.Poly2Tri.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.Stl">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ProBuilder.Stl.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ProBuilder.Stl.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Profiling.Core">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Profiling.Core.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Profiling.Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ResourceManager">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ResourceManager.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.ScriptableBuildPipeline.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.ScriptableBuildPipeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.Timeline.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.CoreUtils">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.CoreUtils.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.XR.CoreUtils.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Interaction.Toolkit">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.Interaction.Toolkit.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.XR.Interaction.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Management">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.Management.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.XR.Management.dll</HintPath>
     </Reference>
     <Reference Include="Unity.XR.Oculus">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\Unity.XR.Oculus.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\Unity.XR.Oculus.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AccessibilityModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AccessibilityModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AndroidJNIModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AndroidJNIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AnimationModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ARModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ARModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ARModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ClothModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ClusterInputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ContentLoadModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ContentLoadModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ContentLoadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CrashReportingModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.CrashReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.DirectorModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.DirectorModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.DirectorModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.DSPGraphModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.DSPGraphModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GameCenterModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.GameCenterModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GIModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.GIModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.GIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.GridModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.GridModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.GridModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HotReloadModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.HotReloadModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ImageConversionModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.InputModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.InputModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.InputModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.JSONSerializeModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.JSONSerializeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.LocalizationModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.LocalizationModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.NVIDIAModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.NVIDIAModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.NVIDIAModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ParticleSystemModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ParticleSystemModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PerformanceReportingModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.PerformanceReportingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ProfilerModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ProfilerModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PropertiesModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.PropertiesModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.PropertiesModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.ScreenCaptureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SharedInternalsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SharedInternalsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteMaskModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SpriteMaskModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpriteShapeModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SpriteShapeModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StreamingModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.StreamingModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.StreamingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubstanceModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TerrainModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainPhysicsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextCoreFontEngineModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextCoreTextEngineModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TLSModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityAnalyticsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityCurlModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityCurlModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityCurlModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.VehiclesModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VFXModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.VFXModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VideoModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VirtualTexturingModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.VirtualTexturingModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.VirtualTexturingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VRModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.VRModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.WindModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.WindModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.WindModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XRModule">
-      <HintPath>/run/media/notabird/fast/SteamLibrary/steamapps/common/Gorilla Tag\Gorilla Tag_Data\Managed\UnityEngine.XRModule.dll</HintPath>
+      <HintPath>$(GameAssemblyPath)\UnityEngine.XRModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 
