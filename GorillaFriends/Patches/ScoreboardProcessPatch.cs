@@ -26,6 +26,8 @@ namespace GorillaFriends.Patches
                         ppTmp.z
                     );
                     __instance.buttonText.rectTransform.sizeDelta = new Vector2(sd.x + 4.0f, sd.y);
+                    __instance.buttonText.overflowMode = TMPro.TextOverflowModes.Overflow;
+                    __instance.buttonText.enableWordWrapping = false;
 
                     // For the new Gorilla Tag versions
                     if (Main.m_bScoreboardTweakerMode) return;
