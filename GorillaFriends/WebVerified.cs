@@ -12,14 +12,14 @@ namespace GorillaFriends
         {
             using UnityWebRequest request = UnityWebRequest.Get(m_szURL);
 
-            TaskCompletionSource<UnityWebRequest> completionSource = new TaskCompletionSource<UnityWebRequest>();
+            TaskCompletionSource<UnityWebRequest> completionSource = new();
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
             operation.completed += _ => completionSource.SetResult(request);
 
             await completionSource.Task;
 
             string result = request.downloadHandler.text;
-            using StringReader reader = new StringReader(result);
+            using StringReader reader = new(result);
 
             string line;
             while ((line = reader.ReadLine()) != null)

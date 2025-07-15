@@ -3,24 +3,21 @@ using UnityEngine;
 
 namespace GorillaFriends.Patches
 {
-    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine), "InitializeLine"), HarmonyWrapSafe]
+    [HarmonyPatch(typeof(GorillaPlayerScoreboardLine), nameof(GorillaPlayerScoreboardLine.InitializeLine)), HarmonyWrapSafe]
     internal class LineInitializePatch
     {
         public static void Prefix(GorillaPlayerScoreboardLine __instance)
         {
-            try
+            bool setActive = !__instance.linePlayer.IsLocal;
+
+            foreach (Transform child in __instance.transform)
             {
-                //FriendButton friendButton = __instance.GetComponent<FriendButton>();
-                //friendButton?.InitializeWithLine();
-                foreach (Component component in __instance.GetComponentsInChildren<FriendButton>(true))
+                GameObject gameObject = child.gameObject;
+                if (gameObject.name == "FriendButton")
                 {
-                    component.gameObject.SetActive(!__instance.linePlayer.IsLocal);
+                    if (gameObject.activeSelf != setActive) gameObject.SetActive(setActive);
                     break;
                 }
-            }
-            catch
-            {
-
             }
         }
     }

@@ -64,7 +64,7 @@ namespace GorillaFriends
                 query.Clear();
 
                 string result = await client.GetStringAsync(readyQuery);
-                if(listener != null) listener(result);
+                listener?.Invoke(result);
             }
             return;
         }

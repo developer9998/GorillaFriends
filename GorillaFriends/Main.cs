@@ -27,7 +27,7 @@ namespace GorillaFriends
         internal static HashSet<string> m_listVerifiedUserIds = [];
         internal static HashSet<string> m_listCurrentSessionFriends = [];
         internal static HashSet<string> m_listCurrentSessionRecentlyChecked = [];
-        internal static Dictionary<string, eRecentlyPlayed> m_listCurrentSessionRecentCheckCache = [];
+        internal static Dictionary<string, eRecentlyPlayed> m_listRecentPlayCache = [];
         internal static HashSet<GorillaScoreBoard> m_listScoreboards = [];
         internal static void Log(string msg) => m_hInstance.Logger.LogMessage(msg);
 
@@ -56,7 +56,7 @@ namespace GorillaFriends
             m_clrPlayedRecently = cfg.Bind("Colors", "RecentlyPlayedWith", m_clrPlayedRecently, "Color of \"Recently played with ...\"").Value;
             m_clrFriend = cfg.Bind("Colors", "Friend", m_clrFriend, "Color of FRIEND!").Value;
 
-            byte[] clrizer = { (byte)(m_clrFriend.r * 255), (byte)(m_clrFriend.g * 255), (byte)(m_clrFriend.b * 255) };
+            byte[] clrizer = [(byte)(m_clrFriend.r * 255), (byte)(m_clrFriend.g * 255), (byte)(m_clrFriend.b * 255)];
             s_clrFriend = "<color=#" + ByteArrayToHexCode(clrizer) + ">";
 
             clrizer[0] = (byte)(m_clrVerified.r * 255); clrizer[1] = (byte)(m_clrVerified.g * 255); clrizer[2] = (byte)(m_clrVerified.b * 255);
@@ -73,7 +73,7 @@ namespace GorillaFriends
 
         public void OnJoinedRoom()
         {
-            Log("Joined");
+            //Log("Joined");
 
             foreach(NetPlayer netPlayer in NetworkSystem.Instance.PlayerListOthers)
             {
@@ -83,7 +83,7 @@ namespace GorillaFriends
 
         public void OnPlayerJoined(NetPlayer netPlayer)
         {
-            Log($"+ {netPlayer}");
+            //Log($"+ {netPlayer.NickName}");
 
             string userId = netPlayer.UserId;
 
@@ -92,7 +92,7 @@ namespace GorillaFriends
             if (NeedToCheckRecently(userId) && m_listCurrentSessionRecentlyChecked.Add(userId))
             {
                 eRecentlyPlayed hasPlayedBefore = HasPlayedWithUsRecently(userId);
-                m_listCurrentSessionRecentCheckCache.Add(userId, hasPlayedBefore);
+                m_listRecentPlayCache.Add(userId, hasPlayedBefore);
 
                 DateTime now = DateTime.Now;
                 DateTimeOffset dateTimeOffset = (DateTimeOffset)now;
@@ -105,7 +105,7 @@ namespace GorillaFriends
                 else
                     PlayerPrefs.SetString(key, unixTimeSeconds.ToString());
 
-                Log($"{netPlayer.NickName}/{userId} met {hasPlayedBefore} on {now.ToShortDateString()} at {now.ToLongTimeString()}");
+                //Log($"{netPlayer.NickName}/{userId} met {hasPlayedBefore} on {now.ToShortDateString()} at {now.ToLongTimeString()}");
 
                 updateName = true;
             }
@@ -126,14 +126,14 @@ namespace GorillaFriends
 
         public void OnPlayerLeft(NetPlayer netPlayer)
         {
-            Log($"- {netPlayer}");
+            //Log($"- {netPlayer.NickName}");
 
             string userId = netPlayer.UserId;
 
             if (!NeedToCheckRecently(userId))
             {
                 m_listCurrentSessionRecentlyChecked.Remove(userId);
-                m_listCurrentSessionRecentCheckCache.Remove(userId);
+                m_listRecentPlayCache.Remove(userId);
             }
 
             if (IsInFriendList(userId))
@@ -142,17 +142,16 @@ namespace GorillaFriends
 
         public void OnLeftRoom()
         {
-            Log("Left");
+            //Log("Left");
 
             try
             {
-                m_listScoreboards.Clear();
+                // m_listScoreboards.Clear();
                 m_listCurrentSessionFriends.Clear();
-
                 m_listCurrentSessionRecentlyChecked.Clear();
-                m_listCurrentSessionRecentCheckCache.Clear();
+                m_listRecentPlayCache.Clear();
             }
-            catch
+            catch(Exception)
             {
                 // Who knows what's gonna happen, lol?
                 // Should be safe but lets be honest -
@@ -198,8 +197,10 @@ namespace GorillaFriends
                                 myFriendController.myText = controller.myText;
                                 myFriendController.myText.text = myFriendController.offText;
                                 myFriendController.offMaterial = controller.offMaterial;
-                                myFriendController.onMaterial = new Material(controller.offMaterial);
-                                myFriendController.onMaterial.color = Main.m_clrFriend;
+                                myFriendController.onMaterial = new Material(controller.offMaterial)
+                                {
+                                    color = Main.m_clrFriend
+                                };
 
                                 GameObject.Destroy(controller);
                             }
@@ -219,7 +220,7 @@ namespace GorillaFriends
 
         private static string ByteArrayToHexCode(byte[] arr)
         {
-            StringBuilder hex = new StringBuilder(arr.Length * 2);
+            StringBuilder hex = new(arr.Length * 2);
             foreach (byte b in arr)
                 hex.AppendFormat("{0:X2}", b);
             return hex.ToString();
@@ -240,6 +241,34 @@ namespace GorillaFriends
             return m_listCurrentSessionFriends.Contains(userId);
         }
 
+        public static void AddFriend(string userId)
+        {
+            PlayerPrefs.SetInt(string.Concat(userId, "_friend"), 1);
+            PlayerPrefs.Save();
+
+            if (!NetworkSystem.Instance.InRoom) return;
+
+            NetPlayer player = Array.Find(NetworkSystem.Instance.PlayerListOthers, player => player.UserId == userId);
+            if (player == null || player.IsNull || !m_listCurrentSessionFriends.Add(userId)) return;
+
+            if (VRRigCache.Instance.TryGetVrrig(player.ActorNumber, out RigContainer playerRig)) playerRig.Rig.UpdateName();
+
+            GorillaScoreboardTotalUpdater.instance.UpdateActiveScoreboards();
+        }
+
+        public static void RemoveFriend(string userId)
+        {
+            PlayerPrefs.DeleteKey(string.Concat(userId, "_friend"));
+            PlayerPrefs.Save();
+
+            if (!NetworkSystem.Instance.InRoom) return;
+
+            NetPlayer player = Array.Find(NetworkSystem.Instance.PlayerListOthers, player => player.UserId == userId);
+            if (player == null || player.IsNull || !m_listCurrentSessionFriends.Remove(userId)) return;
+
+            if (VRRigCache.Instance.TryGetVrrig(player.ActorNumber, out RigContainer playerRig)) playerRig.Rig.UpdateName();
+        }
+
         public static bool NeedToCheckRecently(string userId)
         {
             return !m_listCurrentSessionRecentlyChecked.Contains(userId);
@@ -247,22 +276,17 @@ namespace GorillaFriends
 
         public static eRecentlyPlayed HasPlayedWithUsRecently(string userId)
         {
-            if (m_listCurrentSessionRecentCheckCache.TryGetValue(userId, out eRecentlyPlayed cache))
+            if (m_listRecentPlayCache.TryGetValue(userId, out eRecentlyPlayed cache))
                 return cache;
 
             string key = string.Concat("pd_", userId);
             long lastPlayedTime = long.Parse(PlayerPrefs.GetString(key, "0"), CultureInfo.InvariantCulture);
+
             if (lastPlayedTime == 0) return eRecentlyPlayed.Never;
 
             long currentTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
-
-            if (NetworkSystem.Instance.netPlayerCache.Find(player => player.UserId == userId) is NetPlayer netPlayer)
-            {
-                DateTime dateTime = DateTimeOffset.FromUnixTimeSeconds(lastPlayedTime).DateTime.ToLocalTime();
-                Log($"{netPlayer.NickName} last met on {dateTime.ToShortDateString()} at {dateTime.ToLongTimeString()}");
-            }
-            
             if (lastPlayedTime > currentTime - moreTimeIfWeLagging && lastPlayedTime <= currentTime) return eRecentlyPlayed.Now;
+
             return ((lastPlayedTime + howMuchSecondsIsRecently) > currentTime) ? eRecentlyPlayed.Before : eRecentlyPlayed.Never;
         }
     }

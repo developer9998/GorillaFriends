@@ -3,34 +3,34 @@ using UnityEngine;
 
 namespace GorillaFriends.Patches
 {
-    [HarmonyPatch(typeof(GorillaScoreBoard), nameof(GorillaScoreBoard.RedrawPlayerLines)), HarmonyWrapSafe, HarmonyPriority(440)]
+    [HarmonyPatch(typeof(GorillaScoreBoard), nameof(GorillaScoreBoard.RedrawPlayerLines)), HarmonyWrapSafe, HarmonyPriority(440)] // "440" is a little above average, but not enough to be considered higher than usual
     internal class LineRedrawPatch
     {
         private static bool Prefix(GorillaScoreBoard __instance)
         {
-            if (Main.m_bScoreboardTweakerMode)
-            {
-                return true;
-            }
+            if (Main.m_bScoreboardTweakerMode) return true;
+
+            bool nametagsEnabled = KIDManager.CheckFeatureSettingEnabled(EKIDFeatures.Custom_Nametags);
 
             __instance.stringBuilder.Clear();
             __instance.stringBuilder.Append(__instance.GetBeginningString());
             __instance.buttonStringBuilder.Clear();
-            bool nametagsEnabled = KIDManager.CheckFeatureSettingEnabled(EKIDFeatures.Custom_Nametags);
+            
             for (int i = 0; i < __instance.lines.Count; i++)
             {
+                GorillaPlayerScoreboardLine line = __instance.lines[i];
+                if (line == null || !line || !line.gameObject.activeInHierarchy) continue;
+
                 try
                 {
-                    if (!__instance.lines[i].gameObject.activeInHierarchy) continue;
-
-                    __instance.lines[i].GetComponent<RectTransform>().localPosition = new Vector3(0f, __instance.startingYValue - __instance.lineHeight * i, 0f);
-                    if (__instance.lines[i].linePlayer == null || !__instance.lines[i].linePlayer.InRoom) continue;
+                    line.GetComponent<RectTransform>().localPosition = new Vector3(0f, __instance.startingYValue - __instance.lineHeight * i, 0f);
+                    if (line.linePlayer == null || !line.linePlayer.InRoom) continue;
 
                     __instance.stringBuilder.AppendLine().Append(" ");
 
-                    bool isLocalPlayer = __instance.lines[i].linePlayer.IsLocal;
-                    string playerId = __instance.lines[i].linePlayer.UserId;
-                    string playerName = nametagsEnabled ? __instance.lines[i].playerNameVisible : __instance.lines[i].linePlayer.DefaultName;
+                    bool isLocalPlayer = line.linePlayer.IsLocal;
+                    string playerId = line.linePlayer.UserId;
+                    string playerName = nametagsEnabled ? line.playerNameVisible : line.linePlayer.DefaultName;
 
                     if (!isLocalPlayer && Main.IsInFriendList(playerId))
                         __instance.stringBuilder.Append(Main.s_clrFriend).Append(playerName).Append("</color>");
@@ -43,7 +43,7 @@ namespace GorillaFriends.Patches
 
                     if (!isLocalPlayer)
                     {
-                        if (__instance.lines[i].reportButton.isActiveAndEnabled)
+                        if (line.reportButton.isActiveAndEnabled)
                         {
                             __instance.buttonStringBuilder.AppendLine("FRIEND       MUTE                      REPORT");
                         }

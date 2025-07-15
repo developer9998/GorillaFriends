@@ -8,6 +8,7 @@ namespace GorillaFriends
     public class FriendButton : MonoBehaviour
     {
         public GorillaPlayerScoreboardLine parentLine = null;
+        public bool initialized = false;
         public bool isOn = false;
         public string offText = "";
         public string onText = "";
@@ -15,7 +16,6 @@ namespace GorillaFriends
         public Material offMaterial;
         public Material onMaterial;
         private MeshRenderer meshRenderer = null;
-        private bool initialized = false;
         private float nextUpdate = 0.0f;
         private static float nextTouch = 0.0f;
 
@@ -89,36 +89,23 @@ namespace GorillaFriends
             isOn = !isOn;
             UpdateColor();
 
-            GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
             GorillaTagger.Instance.offlineVRRig.PlayHandTapLocal(67, component.isLeftHand, 0.05f);
-            if(PhotonNetwork.InRoom && GorillaTagger.Instance.myVRRig != null)
+            GorillaTagger.Instance.StartVibration(component.isLeftHand, GorillaTagger.Instance.tapHapticStrength / 2f, GorillaTagger.Instance.tapHapticDuration);
+            if (NetworkSystem.Instance.InRoom && GorillaTagger.Instance.myVRRig != null)
             {
-                GorillaTagger.Instance.myVRRig.SendRPC("PlayHandTap", RpcTarget.Others, (object)67, (object)component.isLeftHand, (object)0.05f);
+                GorillaTagger.Instance.myVRRig.SendRPC("RPC_PlayHandTap", RpcTarget.Others, 67, component.isLeftHand, 0.05f);
             }
 
-            if (isOn)
-            {           
-                Main.m_listCurrentSessionFriends.Add(parentLine.linePlayer.UserId);
-                PlayerPrefs.SetInt(parentLine.linePlayer.UserId + "_friend", 1);
-                PlayerPrefs.Save();
-                parentLine.playerVRRig.UpdateName();
-                goto ENDING; /* GT 1.1.0 */
-                //return;
-            }
+            if (isOn) Main.AddFriend(parentLine.linePlayer.UserId);
+            else Main.RemoveFriend(parentLine.linePlayer.UserId);
 
-            Main.m_listCurrentSessionFriends.Remove(parentLine.linePlayer.UserId);
-            PlayerPrefs.DeleteKey(parentLine.linePlayer.UserId + "_friend");
-            PlayerPrefs.Save();
-            parentLine.playerVRRig.UpdateName();
-
-        /* GT 1.1.0 */
-        ENDING:
-            if(!Main.m_bScoreboardTweakerMode)
+            /* GT 1.1.0 */
+            if (!Main.m_bScoreboardTweakerMode)
             {
-                //Main.Log("Initiating Scoreboard Redraw...");
+                Main.Log("Initiating Scoreboard Redraw...");
                 foreach (var sb in Main.m_listScoreboards)
                 {
-                    //Main.Log("Redrawing...");
+                    Main.Log("Redrawing...");
                     sb.RedrawPlayerLines();
                 }
             }

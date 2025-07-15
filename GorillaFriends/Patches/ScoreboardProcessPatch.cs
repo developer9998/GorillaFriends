@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GorillaFriends.Patches
 {
-    [HarmonyPatch(typeof(GorillaScoreBoard), "Start"), HarmonyWrapSafe]
+    [HarmonyPatch(typeof(GorillaScoreBoard), nameof(GorillaScoreBoard.Start)), HarmonyWrapSafe]
     internal class ScoreboardProcessPatch
     {
         public static void Prefix(GorillaScoreBoard __instance)

@@ -12,27 +12,34 @@ namespace GorillaFriends.Patches
             NetPlayer creator = isLocalRig ? NetworkSystem.Instance.GetLocalPlayer() : __instance.Creator;
             string userId = creator.UserId;
 
-            bool useBlackOutline = false;
+            Color mainColour = Color.white;
+            Color outlineColour = Color.black;
 
             if (!isLocalRig && Main.IsInFriendList(userId))
-                __instance.playerText1.color = Main.m_clrFriend;
-            else if (Main.IsVerified(userId))
-                __instance.playerText1.color = Main.m_clrVerified;
-            else if (!isLocalRig && !Main.NeedToCheckRecently(userId) && Main.HasPlayedWithUsRecently(userId) == Main.eRecentlyPlayed.Before)
-                __instance.playerText1.color = Main.m_clrPlayedRecently;
-            else
             {
-                __instance.playerText1.color = Color.white;
-                useBlackOutline = true;
+                mainColour = Main.m_clrFriend;
+                outlineColour = WithValueMultiplier(Main.m_clrFriend);
+            }
+            else if (Main.IsVerified(userId))
+            {
+                mainColour = Main.m_clrVerified;
+                outlineColour = WithValueMultiplier(Main.m_clrVerified);
+            }
+            else if (!isLocalRig && !Main.NeedToCheckRecently(userId) && Main.HasPlayedWithUsRecently(userId) == Main.eRecentlyPlayed.Before)
+            {
+                mainColour = Main.m_clrPlayedRecently;
+                outlineColour = WithValueMultiplier(Main.m_clrPlayedRecently);
             }
 
-            if (useBlackOutline) __instance.playerText2.color = Color.black;
-            else
-            {
-                Color.RGBToHSV(__instance.playerText1.color, out float H, out float S, out float V);
-                V *= 0.07f;
-                __instance.playerText2.color = Color.HSVToRGB(H, S, V);
-            }
+            __instance.playerText1.color = mainColour;
+            __instance.playerText2.color = outlineColour;
+        }
+
+        private static Color WithValueMultiplier(Color original, float valueMultiplier = 0.06f)
+        {
+            Color.RGBToHSV(original, out float H, out float S, out float V);
+            V *= valueMultiplier;
+            return Color.HSVToRGB(H, S, V);
         }
     }
 }
