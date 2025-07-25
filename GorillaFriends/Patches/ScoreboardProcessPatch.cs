@@ -80,7 +80,7 @@ namespace GorillaFriends.Patches
                         }
                     }
 
-                    __instance.RedrawPlayerLines(); // Check
+                    //__instance.RedrawPlayerLines(); // Check
                     return;
                 }
 

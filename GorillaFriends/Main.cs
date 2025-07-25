@@ -267,6 +267,8 @@ namespace GorillaFriends
             if (player == null || player.IsNull || !m_listCurrentSessionFriends.Remove(userId)) return;
 
             if (VRRigCache.Instance.TryGetVrrig(player.ActorNumber, out RigContainer playerRig)) playerRig.Rig.UpdateName();
+
+            GorillaScoreboardTotalUpdater.instance.UpdateActiveScoreboards();
         }
 
         public static bool NeedToCheckRecently(string userId)
