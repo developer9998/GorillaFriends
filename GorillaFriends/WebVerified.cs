@@ -6,17 +6,13 @@ namespace GorillaFriends
 {
     class WebVerified
     {
-        public const string m_szURL = "https://raw.githubusercontent.com/Not-A-Bird-07/GorillaFriends/refs/heads/main/gorillas.verified";
+        public const string m_szURL = "https://raw.githubusercontent.com/developer9998/GorillaFriends/main/gorillas.verified";
 
         public static async void LoadListOfVerified()
         {
             using UnityWebRequest request = UnityWebRequest.Get(m_szURL);
-
-            TaskCompletionSource<UnityWebRequest> completionSource = new();
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
-            operation.completed += _ => completionSource.SetResult(request);
-
-            await completionSource.Task;
+            await operation;
 
             string result = request.downloadHandler.text;
             using StringReader reader = new(result);
