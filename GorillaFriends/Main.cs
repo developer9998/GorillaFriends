@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
+using GorillaNetworking;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,6 +71,21 @@ namespace GorillaFriends
             RoomSystem.PlayerJoinedEvent += OnPlayerJoined;
             RoomSystem.PlayerLeftEvent += OnPlayerLeft;
             RoomSystem.LeftRoomEvent += OnLeftRoom;
+
+            GorillaTagger.OnPlayerSpawned(Initialized);
+        }
+
+        public async void Initialized()
+        {
+            try
+            {
+                while (!NetworkSystem.Instance.WrongVersion && string.IsNullOrEmpty(PlayFabAuthenticator.instance.GetPlayFabPlayerId())) await Task.Yield();
+                GorillaTagger.Instance.offlineVRRig.UpdateName();
+            }
+            catch
+            {
+
+            }
         }
 
         public void OnJoinedRoom()

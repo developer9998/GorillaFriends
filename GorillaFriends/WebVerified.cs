@@ -22,6 +22,15 @@ namespace GorillaFriends
             {
                 Main.m_listVerifiedUserIds.Add(line);
             }
+
+            try
+            {
+                if (GorillaTagger.hasInstance && GorillaTagger.Instance.offlineVRRig is VRRig localRig && localRig) localRig.UpdateName();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

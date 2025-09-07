@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using GorillaNetworking;
+using HarmonyLib;
 using UnityEngine;
 
 namespace GorillaFriends.Patches
@@ -8,9 +9,8 @@ namespace GorillaFriends.Patches
     {
         public static void Postfix(VRRig __instance)
         {
-            bool isLocalRig = __instance.isOfflineVRRig;
-            NetPlayer creator = isLocalRig ? NetworkSystem.Instance.GetLocalPlayer() : __instance.Creator;
-            string userId = creator.UserId;
+            bool isLocalRig = __instance.isOfflineVRRig || __instance.isLocal;
+            string userId = isLocalRig ? PlayFabAuthenticator.instance.GetPlayFabPlayerId() : __instance.Creator.UserId;
 
             Color mainColour = Color.white;
             Color outlineColour = Color.black;
@@ -32,7 +32,7 @@ namespace GorillaFriends.Patches
             }
 
             __instance.playerText1.color = mainColour;
-            __instance.playerText2.color = outlineColour;
+            //__instance.playerText2.color = outlineColour;
         }
 
         private static Color WithValueMultiplier(Color original, float valueMultiplier = 0.06f)
