@@ -16,6 +16,12 @@ namespace GorillaFriends.Patches
 
                 if (Main.m_listScoreboards.Add(__instance))
                 {
+                    // For the new Gorilla Tag versions
+                    if (Main.m_bScoreboardTweakerMode)
+                    {
+                        return;
+                    }
+
                     __instance.boardText.richText = true;
 
                     var ppTmp = __instance.buttonText.transform.localPosition;
@@ -27,10 +33,7 @@ namespace GorillaFriends.Patches
                     );
                     __instance.buttonText.rectTransform.sizeDelta = new Vector2(sd.x + 4.0f, sd.y);
                     __instance.buttonText.overflowMode = TMPro.TextOverflowModes.Overflow;
-                    __instance.buttonText.enableWordWrapping = false;
-
-                    // For the new Gorilla Tag versions
-                    if (Main.m_bScoreboardTweakerMode) return;
+                    __instance.buttonText.textWrappingMode = TMPro.TextWrappingModes.NoWrap;
 
                     int linesCount = __instance.lines.Count();
                     Main.Log("Got a scoreboard with " + linesCount + " lines!");

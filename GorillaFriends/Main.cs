@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -181,55 +180,53 @@ namespace GorillaFriends
         }
 
 
-        void OnScoreboardTweakerStart()
+        public void OnScoreboardTweakerStart()
         {
+            Log("OnScoreboardTweakerStart");
             m_bScoreboardTweakerMode = true;
         }
 
-        void OnScoreboardTweakerProcessedPre(GorillaScoreBoard scoreboard)
+        public void OnScoreboardTweakerProcessedPre(GorillaScoreBoard scoreboard)
         {
-            int linesCount = scoreboard.lines.Count();
-            for (int i = 0; i < linesCount; ++i)
+            Log($"OnScoreboardTweakerProcessedPre: {scoreboard.gameObject.name}");
+
+            for (int i = 0; i < scoreboard.lines.Count; i++)
             {
-                foreach (Transform t in scoreboard.lines[i].transform)
+                if (scoreboard.lines[i].muteButton is GorillaPlayerLineButton muteButton && muteButton)
                 {
-                    if (t.name == "Mute Button")
+                    GameObject myFriendButton = GameObject.Instantiate(muteButton.gameObject);
+                    if (myFriendButton != null) // Who knows...
                     {
-                        GameObject myFriendButton = GameObject.Instantiate(t.gameObject);
-                        if (myFriendButton != null) // Who knows...
+                        myFriendButton.transform.GetChild(0).localScale = new Vector3(0.032f, 0.032f, 1.0f);
+                        myFriendButton.transform.GetChild(0).name = "Friend Text";
+                        myFriendButton.transform.parent = scoreboard.lines[i].transform;
+                        myFriendButton.transform.name = "FriendButton";
+                        myFriendButton.transform.localPosition = new Vector3(18.0f, 0.0f, 0.0f);
+
+                        var controller = myFriendButton.GetComponent<GorillaPlayerLineButton>();
+                        if (controller != null)
                         {
-                            myFriendButton.transform.GetChild(0).localScale = new Vector3(0.032f, 0.032f, 1.0f);
-                            myFriendButton.transform.GetChild(0).name = "Friend Text";
-                            myFriendButton.transform.parent = scoreboard.lines[i].transform;
-                            myFriendButton.transform.name = "FriendButton";
-                            myFriendButton.transform.localPosition = new Vector3(18.0f, 0.0f, 0.0f);
-
-                            var controller = myFriendButton.GetComponent<GorillaPlayerLineButton>();
-                            if (controller != null)
+                            FriendButton myFriendController = myFriendButton.AddComponent<FriendButton>();
+                            myFriendController.parentLine = scoreboard.lines[i];
+                            myFriendController.offText = "ADD\nFRIEND";
+                            myFriendController.onText = "FRIEND!";
+                            myFriendController.myText = controller.myText;
+                            myFriendController.myText.text = myFriendController.offText;
+                            myFriendController.offMaterial = controller.offMaterial;
+                            myFriendController.onMaterial = new Material(controller.offMaterial)
                             {
-                                FriendButton myFriendController = myFriendButton.AddComponent<FriendButton>();
-                                myFriendController.parentLine = scoreboard.lines[i];
-                                myFriendController.offText = "ADD\nFRIEND";
-                                myFriendController.onText = "FRIEND!";
-                                myFriendController.myText = controller.myText;
-                                myFriendController.myText.text = myFriendController.offText;
-                                myFriendController.offMaterial = controller.offMaterial;
-                                myFriendController.onMaterial = new Material(controller.offMaterial)
-                                {
-                                    color = Main.m_clrFriend
-                                };
+                                color = Main.m_clrFriend
+                            };
 
-                                GameObject.Destroy(controller);
-                            }
-
-                            myFriendButton.transform.localRotation = Quaternion.identity;
-                            myFriendButton.transform.localScale = new Vector3(60.0f, t.localScale.y, 0.25f * t.localScale.z);
-                            myFriendButton.transform.localPosition = new Vector3(-74.0f, 0.0f, 0.0f); // Should be -77, but i want more space between Mute and Friend button
-
-                            myFriendButton.transform.GetChild(0).GetComponent<Text>().color = Color.clear;
-                            GameObject.Destroy(myFriendButton.transform.GetComponent<MeshRenderer>());
+                            GameObject.Destroy(controller);
                         }
-                        break; // next line
+
+                        myFriendButton.transform.localRotation = Quaternion.identity;
+                        myFriendButton.transform.localScale = new Vector3(60.0f, muteButton.transform.localScale.y, 0.25f * muteButton.transform.localScale.z);
+                        myFriendButton.transform.localPosition = new Vector3(-74.0f, 0.0f, 0.0f); // Should be -77, but i want more space between Mute and Friend button
+
+                        myFriendButton.transform.GetChild(0).GetComponent<Text>().color = Color.clear;
+                        GameObject.Destroy(myFriendButton.transform.GetComponent<MeshRenderer>());
                     }
                 }
             }
