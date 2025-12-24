@@ -32,14 +32,12 @@ namespace GorillaFriends.Patches
                     string playerId = line.linePlayer.UserId;
                     string playerName = nametagsEnabled ? line.playerNameVisible : line.linePlayer.DefaultName;
 
-                    if (!isLocalPlayer && Main.IsInFriendList(playerId))
-                        __instance.stringBuilder.Append(Main.s_clrFriend).Append(playerName).Append("</color>");
-                    else if (Main.IsVerified(playerId))
-                        __instance.stringBuilder.Append(Main.s_clrVerified).Append(playerName).Append("</color>");
-                    else if (!isLocalPlayer && !Main.NeedToCheckRecently(playerId) && Main.HasPlayedWithUsRecently(playerId) == Main.eRecentlyPlayed.Before)
-                        __instance.stringBuilder.Append(Main.s_clrPlayedRecently).Append(playerName).Append("</color>");
-                    else
+                    Color tagColour = (line.playerVRRig is VRRig playerRig && playerRig) ? (playerRig.playerText1?.color ?? Color.white) : Color.white;
+
+                    if (tagColour == __instance.boardText.color)
                         __instance.stringBuilder.Append(playerName);
+                    else
+                        __instance.stringBuilder.Append($"<color={ColorUtility.ToHtmlStringRGB(tagColour)}>").Append(playerName).Append("</color>");
 
                     if (!isLocalPlayer)
                     {

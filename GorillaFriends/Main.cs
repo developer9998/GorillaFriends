@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static GorillaFriends.Main;
 
 namespace GorillaFriends
 {
@@ -28,7 +29,7 @@ namespace GorillaFriends
         internal static HashSet<string> m_listVerifiedUserIds = [];
         internal static HashSet<string> m_listCurrentSessionFriends = [];
         internal static HashSet<string> m_listCurrentSessionRecentlyChecked = [];
-        internal static Dictionary<string, eRecentlyPlayed> m_listRecentPlayCache = [];
+        internal static Dictionary<string, (eRecentlyPlayed recentlyPlayed, float value)> m_listRecentPlayCache = [];
         internal static HashSet<GorillaScoreBoard> m_listScoreboards = [];
         internal static void Log(string msg) => m_hInstance.Logger.LogMessage(msg);
 
@@ -107,7 +108,7 @@ namespace GorillaFriends
 
             if (NeedToCheckRecently(userId) && m_listCurrentSessionRecentlyChecked.Add(userId))
             {
-                eRecentlyPlayed hasPlayedBefore = HasPlayedWithUsRecently(userId);
+                var hasPlayedBefore = HasPlayedWithUsRecently(userId);
                 m_listRecentPlayCache.Add(userId, hasPlayedBefore);
 
                 DateTime now = DateTime.Now;
@@ -116,7 +117,7 @@ namespace GorillaFriends
 
                 string key = string.Concat("pd_", userId);
 
-                if (hasPlayedBefore == eRecentlyPlayed.Before)
+                if (hasPlayedBefore.recentlyPlayed == eRecentlyPlayed.Before)
                     PlayerPrefs.SetString(key, (unixTimeSeconds + moreTimeIfWeLagging).ToString());
                 else
                     PlayerPrefs.SetString(key, unixTimeSeconds.ToString());
@@ -287,20 +288,19 @@ namespace GorillaFriends
             return !m_listCurrentSessionRecentlyChecked.Contains(userId);
         }
 
-        public static eRecentlyPlayed HasPlayedWithUsRecently(string userId)
+        public static (eRecentlyPlayed recentlyPlayed, float value) HasPlayedWithUsRecently(string userId)
         {
-            if (m_listRecentPlayCache.TryGetValue(userId, out eRecentlyPlayed cache))
+            if (m_listRecentPlayCache.TryGetValue(userId, out var cache))
                 return cache;
 
             string key = string.Concat("pd_", userId);
-            long lastPlayedTime = long.Parse(PlayerPrefs.GetString(key, "0"), CultureInfo.InvariantCulture);
 
-            if (lastPlayedTime == 0) return eRecentlyPlayed.Never;
+            if (!long.TryParse(PlayerPrefs.GetString(key, "0"), NumberStyles.Integer, CultureInfo.InvariantCulture, out long lastPlayedTime) || lastPlayedTime == 0) return (eRecentlyPlayed.Never, 0);
 
             long currentTime = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
-            if (lastPlayedTime > currentTime - moreTimeIfWeLagging && lastPlayedTime <= currentTime) return eRecentlyPlayed.Now;
+            if (lastPlayedTime > currentTime - moreTimeIfWeLagging && lastPlayedTime <= currentTime) return (eRecentlyPlayed.Now, 1);
 
-            return ((lastPlayedTime + howMuchSecondsIsRecently) > currentTime) ? eRecentlyPlayed.Before : eRecentlyPlayed.Never;
+            return ((lastPlayedTime + howMuchSecondsIsRecently) > currentTime) ? (eRecentlyPlayed.Before, 1f - Mathf.InverseLerp(lastPlayedTime, lastPlayedTime + howMuchSecondsIsRecently, currentTime)) : (eRecentlyPlayed.Never, 0);
         }
     }
 }
