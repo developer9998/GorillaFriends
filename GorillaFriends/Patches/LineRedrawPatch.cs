@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System.Linq;
 using UnityEngine;
 
 namespace GorillaFriends.Patches
@@ -15,7 +16,20 @@ namespace GorillaFriends.Patches
             __instance.stringBuilder.Clear();
             __instance.stringBuilder.Append(__instance.GetBeginningString());
             __instance.buttonStringBuilder.Clear();
-            
+
+            if (__instance.lines.Count(line => line.gameObject.activeInHierarchy) > 10)
+            {
+                __instance.linesParent.transform.localScale = new Vector3(1f, 0.5f, 1f);
+                __instance.linesParent.transform.localPosition = new Vector3(0f, __instance.bigRoomYOffset, 0f);
+                __instance.textsParent.transform.localScale = new Vector3(1f, 0.5f, 1f);
+            }
+            else
+            {
+                __instance.linesParent.transform.localScale = Vector3.one;
+                __instance.linesParent.transform.localPosition = Vector3.zero;
+                __instance.textsParent.transform.localScale = Vector3.one;
+            }
+
             for (int i = 0; i < __instance.lines.Count; i++)
             {
                 GorillaPlayerScoreboardLine line = __instance.lines[i];
