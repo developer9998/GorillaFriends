@@ -1,4 +1,5 @@
 ﻿using GorillaNetworking;
+using GorillaTagScripts;
 using HarmonyLib;
 using UnityEngine;
 
@@ -21,6 +22,10 @@ namespace GorillaFriends.Patches
             else if (Main.IsVerified(userId))
             {
                 mainColour = Main.m_clrVerified;
+            }
+            else if (__instance.ShowGoldNameTag)
+            {
+                mainColour = SubscriptionManager.SUBSCRIBER_NAME_COLOR;
             }
             else if (!isLocalRig && !Main.NeedToCheckRecently(userId) && Main.HasPlayedWithUsRecently(userId) is var hasPlayedBefore && hasPlayedBefore.recentlyPlayed == Main.eRecentlyPlayed.Before)
             {

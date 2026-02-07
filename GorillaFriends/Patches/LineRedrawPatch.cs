@@ -37,7 +37,7 @@ namespace GorillaFriends.Patches
                     if (tagColour == __instance.boardText.color)
                         __instance.stringBuilder.Append(playerName);
                     else
-                        __instance.stringBuilder.Append($"<color={ColorUtility.ToHtmlStringRGB(tagColour)}>").Append(playerName).Append("</color>");
+                        __instance.stringBuilder.Append($"<color={string.Concat('#', ColorUtility.ToHtmlStringRGB(tagColour).TrimStart('#'))}>").Append(playerName).Append("</color>");
 
                     if (!isLocalPlayer)
                     {
@@ -61,6 +61,7 @@ namespace GorillaFriends.Patches
                 }
             }
 
+            __instance.boardText.richText = true;
             __instance.boardText.text = __instance.stringBuilder.ToString();
             __instance.buttonText.text = __instance.buttonStringBuilder.ToString();
             __instance._isDirty = false;
