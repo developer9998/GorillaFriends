@@ -11,27 +11,33 @@ namespace GorillaFriends.Patches
         public static void Postfix(VRRig __instance)
         {
             bool isLocalRig = __instance.isOfflineVRRig || __instance.isLocal;
-            string userId = isLocalRig ? PlayFabAuthenticator.instance.GetPlayFabPlayerId() : __instance.Creator.UserId;
+            NetPlayer player = __instance.Creator ?? NetworkSystem.Instance.GetLocalPlayer();
+            string userId = player.UserId;
 
             Color mainColour = Color.white;
 
             if (!isLocalRig && Main.IsInFriendList(userId))
             {
                 mainColour = Main.m_clrFriend;
-            }
-            else if (Main.IsVerified(userId))
-            {
-                mainColour = Main.m_clrVerified;
-            }
-            else if (__instance.ShowGoldNameTag)
-            {
-                mainColour = SubscriptionManager.SUBSCRIBER_NAME_COLOR;
-            }
-            else if (!isLocalRig && !Main.NeedToCheckRecently(userId) && Main.HasPlayedWithUsRecently(userId) is var hasPlayedBefore && hasPlayedBefore.recentlyPlayed == Main.eRecentlyPlayed.Before)
-            {
-                mainColour = Color.Lerp(Color.white, Main.m_clrPlayedRecently, hasPlayedBefore.value);
+                goto SetTagColour;
             }
 
+            if (Main.IsVerified(userId))
+            {
+                mainColour = Main.m_clrVerified;
+                goto SetTagColour;
+            }
+
+            SubscriptionManager.SubscriptionDetails subscriptionDetails = SubscriptionManager.GetSubscriptionDetails(player);
+            mainColour = (__instance.ShowGoldNameTag || (subscriptionDetails.active && subscriptionDetails.tier > 0)) ? SubscriptionManager.SUBSCRIBER_NAME_COLOR : Color.white;
+
+            if (!isLocalRig && !Main.NeedToCheckRecently(userId) && Main.HasPlayedWithUsRecently(userId) is var hasPlayedBefore && hasPlayedBefore.recentlyPlayed == Main.eRecentlyPlayed.Before)
+            {
+                mainColour = Color.Lerp(Color.white, Main.m_clrPlayedRecently, hasPlayedBefore.value);
+                goto SetTagColour;
+            }
+
+        SetTagColour:
             __instance.playerText1.color = mainColour;
         }
     }

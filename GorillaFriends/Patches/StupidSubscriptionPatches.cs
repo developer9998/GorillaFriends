@@ -9,7 +9,7 @@ internal class StupidSubscriptionPatches
     [HarmonyPatch(nameof(VRRig.SerializeReadShared)), HarmonyPostfix]
     public static void DataReadPatch(VRRig __instance)
     {
-        __instance.showGoldNameTag = __instance.playerText1.color == SubscriptionManager.SUBSCRIBER_NAME_COLOR;
+        __instance.ShowGoldNameTag = __instance.playerText1.color == SubscriptionManager.SUBSCRIBER_NAME_COLOR;
         __instance.UpdateName();
     }
 
